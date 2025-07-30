@@ -49,7 +49,7 @@ export class ModuleTypeClassifier {
 		"prod_ter_scrap_recycler_macro": { displayName: "Terran Scrap Recycler", type: ModuleType.Recycling },
 		// ---- Agricultural Goods L1 ----
 		"prod_gen_spices_macro": { displayName: "Spice Production", type: ModuleType.AgriculturalGoodsL1 },
-		"prod_gen_water_macro": { displayName: "Water Productio", type: ModuleType.AgriculturalGoodsL1 },
+		"prod_gen_water_macro": { displayName: "Water Production", type: ModuleType.AgriculturalGoodsL1 },
 		"prod_arg_meat_macro": { displayName: "Meat Production", type: ModuleType.AgriculturalGoodsL1 },
 		"prod_arg_wheat_macro": { displayName: "Wheat Production", type: ModuleType.AgriculturalGoodsL1 },
 		"prod_bor_plankton_macro": { displayName: "Plankton Production", type: ModuleType.AgriculturalGoodsL1 },
@@ -356,9 +356,15 @@ export class ModuleTypeClassifier {
 			[ModuleType.Other]: []
 		};
 
+		// Use a Set to track already added macros per type
+		const addedMacros = new Set<string>();
+
 		macros.forEach(macro => {
-			const moduleInfo = this.classifyModule(macro);
-			grouped[moduleInfo.type].push(moduleInfo);
+			if (!addedMacros.has(macro)) {
+				const moduleInfo = this.classifyModule(macro);
+				grouped[moduleInfo.type].push(moduleInfo);
+				addedMacros.add(macro);
+			}
 		});
 
 		return grouped;
