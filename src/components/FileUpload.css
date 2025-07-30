@@ -1,0 +1,35 @@
+.file-upload {
+	width: 100%;
+	max-width: 500px;
+}
+
+.drop-zone {
+	border: 2px dashed #0088cc;
+	border-radius: 8px;
+	padding: 60px 40px;
+	text-align: center;
+	cursor: pointer;
+	transition: all 0.3s ease;
+	background-color: rgba(0, 136, 204, 0.05);
+}
+
+.drop-zone:hover {
+	border-color: #00aaff;
+	background-color: rgba(0, 136, 204, 0.1);
+}
+
+.upload-icon {
+	color: #0088cc;
+	margin-bottom: 20px;
+}
+
+.drop-zone p {
+	margin: 10px 0;
+	font-size: 18px;
+	color: #e0e0e0;
+}
+
+.drop-zone .sub-text {
+	font-size: 14px;
+	color: #888;
+}

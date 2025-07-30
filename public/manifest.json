@@ -1,0 +1,15 @@
+{
+	"short_name": "X4 Reindexer",
+	"name": "X4 Foundations Blueprint Reindexer",
+	"icons": [
+		{
+			"src": "icon.svg",
+			"sizes": "any",
+			"type": "image/svg+xml"
+		}
+	],
+	"start_url": ".",
+	"display": "standalone",
+	"theme_color": "#000000",
+	"background_color": "#0a0a0a"
+}

@@ -1,0 +1,91 @@
+.module-duplicator {
+	max-height: 600px;
+	overflow-y: auto;
+}
+
+.duplication-target {
+	margin-bottom: 20px;
+}
+
+.specific-selection {
+	margin-top: 15px;
+	padding: 15px;
+	background-color: #1a1a1a;
+	border-radius: 4px;
+}
+
+.or-separator {
+	text-align: center;
+	color: #666;
+	margin: 15px 0;
+	font-weight: bold;
+}
+
+.macro-multiselect {
+	width: 100%;
+	min-height: 120px;
+	padding: 8px;
+}
+
+.select-hint {
+	font-size: 12px;
+	color: #888;
+	margin-top: 5px;
+}
+
+.duplication-settings {
+	background-color: #1a1a1a;
+	padding: 20px;
+	border-radius: 4px;
+	margin-bottom: 20px;
+}
+
+.direction-settings {
+	margin-top: 20px;
+}
+
+.direction-settings h4 {
+	margin-bottom: 15px;
+	color: #0088cc;
+}
+
+.coordinate-grid {
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr;
+	gap: 15px;
+	margin-top: 15px;
+}
+
+.coordinate-grid input[type="number"] {
+	width: 100%;
+}
+
+.duplication-note {
+	margin-top: 15px;
+	padding: 12px;
+	background-color: rgba(255, 193, 7, 0.1);
+	border: 1px solid #ffc107;
+	border-radius: 4px;
+	color: #ffc107;
+	font-size: 14px;
+}
+
+.duplication-settings > .form-group > input[type="number"]::-webkit-inner-spin-button,
+.duplication-settings > .form-group > input[type="number"]::-webkit-outer-spin-button {
+	-webkit-appearance: auto;
+	opacity: 1;
+}
+
+.checkbox-hint {
+	font-size: 12px;
+	color: #888;
+	margin-top: 4px;
+	margin-left: 26px;
+}
+
+.duplicate-button {
+	width: 100%;
+	padding: 12px;
+	font-size: 16px;
+	font-weight: bold;
+}
