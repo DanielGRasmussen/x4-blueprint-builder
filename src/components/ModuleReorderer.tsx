@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { Blueprint, ModuleType, BlueprintEntry } from "../types/blueprint";
 import { ModuleTypeClassifier } from "../utils/moduleTypeClassifier";
 import ModuleTypeFilter from "./ModuleTypeFilter";
@@ -21,6 +21,7 @@ const ModuleReorderer: React.FC<ModuleReordererProps> = ({ blueprint, onUpdate }
 	const [selectedType, setSelectedType] = useState<ModuleType | "">("");
 	const [_, setWarnings] = useState<string[]>([]);
 	const [draggedIndex, setDraggedIndex] = useState<number | null>(null);
+	const moduleReordererRef = useRef<HTMLDivElement>(null);
 
 	const modulesByType = ModuleTypeClassifier.getModulesByType(
 		blueprint.entries.map(e => e.macro)
@@ -60,12 +61,31 @@ const ModuleReorderer: React.FC<ModuleReordererProps> = ({ blueprint, onUpdate }
 		
 		if (usedCount < totalCount) {
 			const remainingCount = totalCount - usedCount;
+			
+			// Capture distance from bottom of entire module reorderer container before adding
+			let distanceFromBottom = 0;
+			if (moduleReordererRef.current) {
+				const scrollHeight = moduleReordererRef.current.scrollHeight;
+				const scrollTop = moduleReordererRef.current.scrollTop;
+				const clientHeight = moduleReordererRef.current.clientHeight;
+				distanceFromBottom = scrollHeight - scrollTop - clientHeight;
+			}
+			
 			setPriorityOrder([...priorityOrder, { 
 				macro, 
 				startIndex: usedCount + 1,
 				count: remainingCount, 
 				showSlider: false 
 			}]);
+			
+			// Restore distance from bottom after React renders
+			requestAnimationFrame(() => {
+				if (moduleReordererRef.current) {
+					const newScrollHeight = moduleReordererRef.current.scrollHeight;
+					const clientHeight = moduleReordererRef.current.clientHeight;
+					moduleReordererRef.current.scrollTop = newScrollHeight - clientHeight - distanceFromBottom;
+				}
+			});
 		}
 	};
 
@@ -106,6 +126,15 @@ const ModuleReorderer: React.FC<ModuleReordererProps> = ({ blueprint, onUpdate }
 	const handleAddRemaining = () => {
 		const newItems: PrioritySegment[] = [];
 		
+		// Capture distance from bottom before adding items
+		let distanceFromBottom = 0;
+		if (moduleReordererRef.current) {
+			const scrollHeight = moduleReordererRef.current.scrollHeight;
+			const scrollTop = moduleReordererRef.current.scrollTop;
+			const clientHeight = moduleReordererRef.current.clientHeight;
+			distanceFromBottom = scrollHeight - scrollTop - clientHeight;
+		}
+		
 		// Get macros to add based on filter
 		const macrosToAdd = selectedType 
 			? modulesByType[selectedType].map(m => m.macro)
@@ -126,6 +155,15 @@ const ModuleReorderer: React.FC<ModuleReordererProps> = ({ blueprint, onUpdate }
 		});
 		
 		setPriorityOrder([...priorityOrder, ...newItems]);
+		
+		// Restore distance from bottom after React renders
+		requestAnimationFrame(() => {
+			if (moduleReordererRef.current) {
+				const newScrollHeight = moduleReordererRef.current.scrollHeight;
+				const clientHeight = moduleReordererRef.current.clientHeight;
+				moduleReordererRef.current.scrollTop = newScrollHeight - clientHeight - distanceFromBottom;
+			}
+		});
 	};
 
 	const handleReorder = () => {
@@ -267,7 +305,7 @@ const ModuleReorderer: React.FC<ModuleReordererProps> = ({ blueprint, onUpdate }
 	};
 
 	return (
-		<div className="module-reorderer component-section">
+		<div className="module-reorderer component-section" ref={moduleReordererRef}>
 			<h3>Module Priority Order</h3>
 
 			<div className="filter-controls">
