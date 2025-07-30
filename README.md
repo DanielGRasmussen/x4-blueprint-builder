@@ -1,5 +1,7 @@
 # X4 Foundations Blueprint Reindexer
 
+[![Deploy to GitHub Pages](https://github.com/DanielGRasmussen/x4-reindexer/actions/workflows/deploy.yml/badge.svg)](https://github.com/DanielGRasmussen/x4-reindexer/actions)
+
 A React-based web application for reordering and modifying X4 Foundations station blueprints.
 
 ## Features
