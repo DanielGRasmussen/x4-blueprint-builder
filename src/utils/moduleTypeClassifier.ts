@@ -356,9 +356,15 @@ export class ModuleTypeClassifier {
 			[ModuleType.Other]: []
 		};
 
+		// Use a Set to track already added macros per type
+		const addedMacros = new Set<string>();
+
 		macros.forEach(macro => {
-			const moduleInfo = this.classifyModule(macro);
-			grouped[moduleInfo.type].push(moduleInfo);
+			if (!addedMacros.has(macro)) {
+				const moduleInfo = this.classifyModule(macro);
+				grouped[moduleInfo.type].push(moduleInfo);
+				addedMacros.add(macro);
+			}
 		});
 
 		return grouped;

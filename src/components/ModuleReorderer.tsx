@@ -19,7 +19,7 @@ interface PrioritySegment {
 const ModuleReorderer: React.FC<ModuleReordererProps> = ({ blueprint, onUpdate }) => {
 	const [priorityOrder, setPriorityOrder] = useState<PrioritySegment[]>([]);
 	const [selectedType, setSelectedType] = useState<ModuleType | "">("");
-	const [warnings, setWarnings] = useState<string[]>([]);
+	const [_, setWarnings] = useState<string[]>([]);
 	const [draggedIndex, setDraggedIndex] = useState<number | null>(null);
 
 	const modulesByType = ModuleTypeClassifier.getModulesByType(
@@ -184,14 +184,34 @@ const ModuleReorderer: React.FC<ModuleReordererProps> = ({ blueprint, onUpdate }
 		
 		// Update predecessor references
 		const oldToNewIndexMap = new Map<number, number>();
-		blueprint.entries.forEach((entry, idx) => {
-			const newEntry = updatedBlueprint.entries.find(e => 
-				e.macro === entry.macro && 
-				blueprint.entries.filter((e2, idx2) => e2.macro === entry.macro && idx2 < idx).length ===
-				updatedBlueprint.entries.filter((e2, idx2) => e2.macro === entry.macro && idx2 < updatedBlueprint.entries.indexOf(e)).length
-			);
-			if (newEntry) {
-				oldToNewIndexMap.set(entry.index, newEntry.index);
+		
+		// Create maps to track macro occurrences efficiently
+		const oldMacroOccurrences = new Map<string, number[]>();
+		const newMacroOccurrences = new Map<string, number[]>();
+		
+		blueprint.entries.forEach((entry) => {
+			if (!oldMacroOccurrences.has(entry.macro)) {
+				oldMacroOccurrences.set(entry.macro, []);
+			}
+			oldMacroOccurrences.get(entry.macro)!.push(entry.index);
+		});
+		
+		updatedBlueprint.entries.forEach((entry) => {
+			if (!newMacroOccurrences.has(entry.macro)) {
+				newMacroOccurrences.set(entry.macro, []);
+			}
+			newMacroOccurrences.get(entry.macro)!.push(entry.index);
+		});
+		
+		// Map old indices to new indices based on occurrence order
+		oldMacroOccurrences.forEach((oldIndices, macro) => {
+			const newIndices = newMacroOccurrences.get(macro);
+			if (newIndices) {
+				oldIndices.forEach((oldIndex, occurrenceIndex) => {
+					if (occurrenceIndex < newIndices.length) {
+						oldToNewIndexMap.set(oldIndex, newIndices[occurrenceIndex]);
+					}
+				});
 			}
 		});
 		
