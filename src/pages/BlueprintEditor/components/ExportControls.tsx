@@ -1,6 +1,6 @@
 import React from "react";
-import { Blueprint } from "../types/blueprint";
-import { BlueprintParser } from "../utils/blueprintParser";
+import { Blueprint } from "../../../types/blueprint";
+import { BlueprintParser } from "../../../utils/blueprintParser";
 import "./ExportControls.css";
 
 interface ExportControlsProps {

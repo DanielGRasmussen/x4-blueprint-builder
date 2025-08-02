@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import { Blueprint, ModuleType } from "../types/blueprint";
-import { BlueprintReindexer, CoordinateModification } from "../utils/blueprintReindexer";
-import { ModuleTypeClassifier } from "../utils/moduleTypeClassifier";
-import IncrementButtons from "./IncrementButtons";
-import ModuleTypeFilter from "./ModuleTypeFilter";
+import { Blueprint, ModuleType } from "../../../types/blueprint";
+import { BlueprintReindexer, CoordinateModification } from "../../../utils/blueprintReindexer";
+import { ModuleTypeClassifier } from "../../../utils/moduleTypeClassifier";
+import IncrementButtons from "../../../components/common/IncrementButtons";
+import ModuleTypeFilter from "../../../components/common/ModuleTypeFilter";
 import "./CoordinateModifier.css";
 
 interface CoordinateModifierProps {

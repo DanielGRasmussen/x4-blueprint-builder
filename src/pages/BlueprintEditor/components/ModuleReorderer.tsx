@@ -1,7 +1,7 @@
 import React, { useState, useRef } from "react";
-import { Blueprint, ModuleType, BlueprintEntry } from "../types/blueprint";
-import { ModuleTypeClassifier } from "../utils/moduleTypeClassifier";
-import ModuleTypeFilter from "./ModuleTypeFilter";
+import { Blueprint, ModuleType, BlueprintEntry } from "../../../types/blueprint";
+import { ModuleTypeClassifier } from "../../../utils/moduleTypeClassifier";
+import ModuleTypeFilter from "../../../components/common/ModuleTypeFilter";
 import "./ModuleReorderer.css";
 
 interface ModuleReordererProps {

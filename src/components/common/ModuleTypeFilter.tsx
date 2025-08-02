@@ -1,5 +1,5 @@
 import React from "react";
-import { ModuleType } from "../types/blueprint";
+import { ModuleType } from "../../types/blueprint";
 import "./ModuleTypeFilter.css";
 
 interface ModuleTypeFilterProps {

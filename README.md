@@ -1,4 +1,4 @@
-# X4 Foundations Blueprint Reindexer
+# X4 Foundations Blueprint Editor
 
 [![Deploy to GitHub Pages](https://github.com/DanielGRasmussen/x4-reindexer/actions/workflows/deploy.yml/badge.svg)](https://github.com/DanielGRasmussen/x4-reindexer/actions)
 

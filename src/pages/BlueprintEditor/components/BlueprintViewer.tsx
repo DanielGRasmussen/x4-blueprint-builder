@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { Blueprint, BlueprintEntry, ModuleType } from "../types/blueprint";
-import { ModuleTypeClassifier } from "../utils/moduleTypeClassifier";
+import { Blueprint, BlueprintEntry, ModuleType } from "../../../types/blueprint";
+import { ModuleTypeClassifier } from "../../../utils/moduleTypeClassifier";
 import "./BlueprintViewer.css";
 
 interface BlueprintViewerProps {
@@ -21,7 +21,6 @@ const BlueprintViewer: React.FC<BlueprintViewerProps> = ({ blueprint }) => {
 		setExpandedTypes(newExpanded);
 	};
 
-	// Group entries by type while preserving individual entries
 	const entriesByType: Record<ModuleType, Array<{entry: BlueprintEntry, moduleInfo: ReturnType<typeof ModuleTypeClassifier.classifyModule>}>> = {
 		[ModuleType.RefinedGoods]: [],
 		[ModuleType.HighTechGoods]: [],
