@@ -1,0 +1,137 @@
+@use "./variables" as *;
+
+// Variables
+$spacing-xs: 5px;
+$spacing-sm: 8px;
+$spacing-md: 10px;
+$spacing-lg: 15px;
+$spacing-xl: 20px;
+
+$text-muted: #b0b0b0;
+$text-danger: #f44;
+$text-success: #0c6;
+
+// Mixins
+@mixin button-base {
+	padding: $spacing-sm $spacing-lg;
+	border: none;
+	border-radius: $radius;
+	cursor: pointer;
+	font-size: 14px;
+	transition:
+		background-color 0.2s,
+		transform 0.2s;
+	width: 100%;
+	color: white;
+
+	&:hover:not(:disabled) {
+		transform: translateY(-1px);
+	}
+
+	&:active:not(:disabled) {
+		transform: translateY(0);
+	}
+
+	&:disabled {
+		opacity: 0.5;
+		cursor: not-allowed;
+	}
+}
+
+@mixin form-input-base {
+	padding: $spacing-xs $spacing-md;
+	background-color: $bg-medium;
+	color: $text-light;
+	border: 1px solid $border-color;
+	border-radius: $radius;
+	font-size: 14px;
+
+	&:focus {
+		outline: none;
+		border-color: $primary-color;
+	}
+}
+
+@mixin section-base {
+	background: $bg-medium;
+	border: 1px solid $border-color;
+	border-radius: $radius-xl;
+	padding: $spacing-lg;
+	display: flex;
+	flex-direction: column;
+
+	h3,
+	h4 {
+		margin: 0 0 $spacing-lg 0;
+		color: $primary-color;
+	}
+
+	h3 {
+		font-size: 18px;
+	}
+
+	h4 {
+		font-size: 16px;
+	}
+}
+
+@mixin custom-scrollbar {
+	&::-webkit-scrollbar {
+		width: 8px;
+	}
+
+	&::-webkit-scrollbar-track {
+		background: $bg-dark;
+		border-radius: $radius;
+	}
+
+	&::-webkit-scrollbar-thumb {
+		background: $bg-secondary;
+		border-radius: $radius;
+
+		&:hover {
+			background: $bg-tertiary;
+		}
+	}
+}
+
+@mixin empty-state {
+	padding: calc(2 * $spacing-xl);
+	text-align: center;
+	color: $text-muted;
+	font-style: italic;
+}
+
+@mixin modal-dialog {
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	background: $bg-medium;
+	border: 1px solid $border-color;
+	border-radius: $radius-xl;
+	padding: $spacing-xl;
+	z-index: 1000;
+	box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+}
+
+@mixin button-hover-lift {
+	transition: all 0.2s ease;
+
+	&:hover:not(:disabled) {
+		transform: translateY(-1px);
+	}
+
+	&:active:not(:disabled) {
+		transform: translateY(0);
+	}
+}
+
+@mixin icon-action-button {
+	background: transparent;
+	border: none;
+	cursor: pointer;
+	padding: $spacing-xs;
+	border-radius: $radius;
+	transition: background-color 0.2s;
+}

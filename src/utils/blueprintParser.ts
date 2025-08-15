@@ -4,7 +4,7 @@ export class BlueprintParser {
 	static parseBlueprint(xmlString: string): Blueprint {
 		const parser = new DOMParser();
 		const doc = parser.parseFromString(xmlString, "text/xml");
-		
+
 		const planElement = doc.querySelector("plan");
 		if (!planElement) {
 			throw new Error("Invalid blueprint: no plan element found");
@@ -107,7 +107,8 @@ export class BlueprintParser {
 			if (shields.length > 0) {
 				upgrades.groups!.shields = Array.from(shields).map(shield => ({
 					macro: shield.getAttribute("macro") || "",
-					group: shield.getAttribute("group") || ""
+					group: shield.getAttribute("group") || "",
+					exact: shield.getAttribute("exact") ? parseInt(shield.getAttribute("exact")!) : undefined
 				}));
 			}
 
@@ -125,7 +126,7 @@ export class BlueprintParser {
 	}
 
 	static blueprintToXml(blueprint: Blueprint): string {
-		let xml = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n";
+		let xml = '<?xml version="1.0" encoding="utf-8"?>\n';
 		xml += "<plans>\n";
 		xml += `	<plan id="${blueprint.id}" name="${blueprint.name}"`;
 		if (blueprint.description) {
@@ -148,7 +149,7 @@ export class BlueprintParser {
 			if (entry.connection) {
 				xml += ` connection="${entry.connection}"`;
 			}
-			
+
 			if (!entry.predecessor && !entry.offset && !entry.upgrades) {
 				xml += "/>\n";
 			} else {
@@ -178,13 +179,17 @@ export class BlueprintParser {
 				if (entry.upgrades && entry.upgrades.groups) {
 					xml += "			<upgrades>\n";
 					xml += "				<groups>\n";
-					
+
 					if (entry.upgrades.groups.shields) {
 						entry.upgrades.groups.shields.forEach(shield => {
-							xml += `					<shields macro="${shield.macro}" group="${shield.group}"/>\n`;
+							xml += `					<shields macro="${shield.macro}" group="${shield.group}"`;
+							if (shield.exact !== undefined) {
+								xml += ` exact="${shield.exact}"`;
+							}
+							xml += "/>\n";
 						});
 					}
-					
+
 					if (entry.upgrades.groups.turrets) {
 						entry.upgrades.groups.turrets.forEach(turret => {
 							xml += `					<turrets macro="${turret.macro}" group="${turret.group}"`;
@@ -194,7 +199,7 @@ export class BlueprintParser {
 							xml += "/>\n";
 						});
 					}
-					
+
 					xml += "				</groups>\n";
 					xml += "			</upgrades>\n";
 				}

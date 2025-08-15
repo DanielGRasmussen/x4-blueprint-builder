@@ -1,0 +1,34 @@
+@use "./shared" as shared;
+@use "./variables" as *;
+
+// Global button styles
+button {
+	@include shared.button-base;
+	background-color: $primary-color;
+
+	&:hover:not(:disabled) {
+		background-color: $primary-hover;
+	}
+
+	&:disabled {
+		background-color: $bg-secondary;
+	}
+}
+
+// Global form input styles
+input[type="text"],
+input[type="number"],
+select {
+	background-color: $bg-dark;
+	padding: shared.$spacing-sm;
+
+	@include shared.form-input-base;
+}
+
+// Global label styles
+label {
+	display: block;
+	margin-bottom: shared.$spacing-xs;
+	color: shared.$text-muted;
+	font-size: 14px;
+}

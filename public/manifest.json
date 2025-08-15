@@ -1,6 +1,6 @@
 {
-	"short_name": "X4 Reindexer",
-	"name": "X4 Foundations Blueprint Reindexer",
+	"short_name": "X4 Blueprint Builder",
+	"name": "X4 Foundations Blueprint Builder",
 	"icons": [
 		{
 			"src": "icon.svg",

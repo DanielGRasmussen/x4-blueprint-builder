@@ -1,0 +1,285 @@
+@use "../../../styles/shared" as shared;
+@use "../../../styles/variables" as *;
+
+.category-manager {
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+}
+
+.manager-header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: shared.$spacing-xl;
+
+	h3 {
+		margin: 0;
+		color: $primary-color;
+	}
+}
+
+.header-actions {
+	display: flex;
+	gap: shared.$spacing-md;
+}
+
+%header-button {
+	@include shared.button-base;
+	white-space: nowrap;
+	width: auto;
+	padding: shared.$spacing-sm shared.$spacing-xl;
+}
+
+.reset-all-button {
+	@extend %header-button;
+	background: shared.$text-danger;
+
+	&:hover:not(:disabled) {
+		background: $danger-hover;
+	}
+}
+
+.add-category-button {
+	@extend %header-button;
+	background: $primary-color;
+
+	&:hover:not(:disabled) {
+		background: $primary-hover;
+	}
+}
+
+.categories-list {
+	flex: 1;
+	overflow-y: auto;
+	border: 1px solid $border-color;
+	border-radius: $radius;
+	background: $bg-dark;
+
+	@include shared.custom-scrollbar;
+}
+
+.category-item {
+	display: flex;
+	align-items: center;
+	padding: shared.$spacing-md;
+	border-bottom: 1px solid $border-color;
+	transition: all 0.2s;
+	position: relative;
+
+	&:hover {
+		background-color: $hover-overlay;
+	}
+
+	&.editing {
+		background-color: $primary-overlay;
+		padding: shared.$spacing-sm shared.$spacing-md;
+	}
+
+	&.dragging {
+		opacity: 0.5;
+	}
+
+	&.drag-over {
+		border-top: 3px solid $primary-color;
+		padding-top: shared.$spacing-md;
+	}
+}
+
+.drag-handle {
+	cursor: grab;
+	padding: shared.$spacing-xs shared.$spacing-sm;
+	color: shared.$text-muted;
+	font-size: 14px;
+	user-select: none;
+	border-radius: $radius;
+	transition: all 0.2s;
+	margin-right: shared.$spacing-sm;
+
+	&:hover {
+		background-color: $hover-overlay;
+		color: $primary-color;
+	}
+
+	&:active {
+		cursor: grabbing;
+	}
+
+	&.disabled {
+		cursor: default;
+		opacity: 0.3;
+
+		&:hover {
+			background-color: transparent;
+			color: shared.$text-muted;
+		}
+	}
+}
+
+.category-id {
+	font-family: monospace;
+	font-size: 12px;
+	color: $text-subtle;
+	min-width: 180px;
+}
+
+.category-name {
+	flex: 1;
+	color: $text-light;
+	font-weight: 500;
+}
+
+.custom-indicator {
+	color: $primary-color;
+	font-size: 12px;
+	font-weight: normal;
+}
+
+.category-actions {
+	display: flex;
+	gap: shared.$spacing-xs;
+
+	button {
+		background: transparent;
+		border: none;
+		cursor: pointer;
+		padding: shared.$spacing-xs;
+		border-radius: $radius;
+		font-size: 16px;
+		transition: background-color 0.2s;
+
+		&.edit-button:hover {
+			background-color: $primary-overlay-strong;
+		}
+
+		&.reset-button:hover {
+			background-color: rgba(255, 193, 7, 0.2);
+		}
+
+		&.delete-button:hover {
+			background-color: $danger-overlay-strong;
+		}
+	}
+}
+
+.edit-input {
+	flex: 1;
+	padding: shared.$spacing-xs shared.$spacing-md;
+	background: $bg-medium;
+	color: $text-light;
+	border: 1px solid $border-color;
+	border-radius: $radius;
+	margin: 0 shared.$spacing-md;
+
+	&:focus {
+		outline: none;
+		border-color: $primary-color;
+	}
+}
+
+.edit-actions {
+	display: flex;
+	gap: shared.$spacing-sm;
+}
+
+%inline-button {
+	padding: shared.$spacing-xs shared.$spacing-md;
+	color: white;
+	border: none;
+	border-radius: $radius;
+	cursor: pointer;
+	font-size: 14px;
+	transition: background 0.2s;
+}
+
+.save-button {
+	@extend %inline-button;
+	background: shared.$text-success;
+
+	&:hover {
+		background: $success-hover;
+	}
+}
+
+.cancel-button {
+	@extend %inline-button;
+	background: $bg-tertiary;
+
+	&:hover {
+		background: #777;
+	}
+}
+
+.add-category-dialog {
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	background: $bg-medium;
+	border: 1px solid $border-color;
+	border-radius: $radius-xl;
+	padding: shared.$spacing-xl;
+	min-width: 400px;
+	z-index: 1000;
+	box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+
+	h3 {
+		margin: 0 0 shared.$spacing-xl 0;
+		color: $primary-color;
+	}
+}
+
+.form-group {
+	label {
+		display: block;
+		margin-bottom: shared.$spacing-xs;
+		color: shared.$text-muted;
+		font-weight: 500;
+	}
+
+	input {
+		width: 100%;
+		padding: shared.$spacing-sm shared.$spacing-md;
+		background: $bg-dark;
+		color: $text-light;
+		border: 1px solid $border-color;
+		border-radius: $radius;
+
+		&:focus {
+			outline: none;
+			border-color: $primary-color;
+		}
+	}
+
+	small {
+		display: block;
+		margin-top: shared.$spacing-xs;
+		color: $text-subtle;
+		font-size: 12px;
+	}
+}
+
+.error-message {
+	color: shared.$text-danger;
+	margin-bottom: shared.$spacing-lg;
+	padding: shared.$spacing-sm 12px;
+	background: $danger-overlay;
+	border: 1px solid shared.$text-danger;
+	border-radius: $radius;
+}
+
+.dialog-actions {
+	display: flex;
+	gap: shared.$spacing-md;
+	justify-content: flex-end;
+	margin-top: shared.$spacing-xl;
+}
+
+.add-button {
+	@include shared.button-base;
+	background: $primary-color;
+
+	&:hover:not(:disabled) {
+		background: $primary-hover;
+	}
+}

@@ -1,103 +1,50 @@
-import React, { useState } from "react";
-import "./App.css";
-import { Blueprint } from "./types/blueprint";
-import { BlueprintParser } from "./utils/blueprintParser";
-import FileUpload from "./components/FileUpload";
-import BlueprintViewer from "./components/BlueprintViewer";
-import ModuleReorderer from "./components/ModuleReorderer";
-import CoordinateModifier from "./components/CoordinateModifier";
-import ModuleDuplicator from "./components/ModuleDuplicator";
-import ExportControls from "./components/ExportControls";
+import React from "react";
+import { Routes, Route, NavLink, Navigate } from "react-router-dom";
+import styles from "./App.module.scss";
+import BlueprintBuilderPage from "./pages/BlueprintBuilder/BlueprintBuilderPage";
+import SettingsPage from "./pages/Settings/SettingsPage";
 
 function App() {
-	const [blueprint, setBlueprint] = useState<Blueprint | null>(null);
-	const [error, setError] = useState<string>("");
-	const [blueprintName, setBlueprintName] = useState<string>("");
-	const [createNewId, setCreateNewId] = useState<boolean>(false);
-
-	const handleFileUpload = (content: string) => {
-		try {
-			const parsedBlueprint = BlueprintParser.parseBlueprint(content);
-			setBlueprint(parsedBlueprint);
-			setBlueprintName(parsedBlueprint.name);
-			setError("");
-		} catch (err) {
-			setError(`Failed to parse blueprint: ${err instanceof Error ? err.message : "Unknown error"}`);
-			setBlueprint(null);
-		}
-	};
-
 	return (
-		<div className="App">
-			<header className="App-header">
-				<h1>X4 Foundations Blueprint Reindexer</h1>
+		<div className={styles.app}>
+			<header className={styles.header}>
+				<h1>X4 Foundations Blueprint Builder</h1>
+				<nav className={styles.tabNavigation}>
+					<NavLink
+						to="/builder"
+						className={({ isActive }) => `${styles.tabButton} ${isActive ? styles.active : ""}`}
+					>
+						Blueprint Builder
+					</NavLink>
+					<NavLink
+						to="/settings"
+						className={({ isActive }) => `${styles.tabButton} ${isActive ? styles.active : ""}`}
+					>
+						Settings
+					</NavLink>
+				</nav>
 			</header>
-			
-			<main className="App-main">
-				{!blueprint ? (
-					<div className="upload-section">
-						<FileUpload onFileUpload={handleFileUpload} />
-						{error && <div className="error-message">{error}</div>}
-					</div>
-				) : (
-					<div className="blueprint-editor">
-						<div className="blueprint-info">
-							<div className="blueprint-name-edit">
-								<input
-									type="text"
-									value={blueprintName}
-									onChange={(e) => setBlueprintName(e.target.value)}
-									className="blueprint-name-input"
-								/>
-							</div>
-							{blueprint.description && <p>{blueprint.description}</p>}
-							<p>Total modules: {blueprint.entries.length}</p>
-							<div className="blueprint-options">
-								<label className="checkbox-group">
-									<input
-										type="checkbox"
-										checked={createNewId}
-										onChange={(e) => setCreateNewId(e.target.checked)}
-									/>
-									<span>Create as new blueprint (don&apos;t replace original)</span>
-								</label>
-							</div>
-							<button onClick={() => setBlueprint(null)} className="reset-button">
-								Load New Blueprint
-							</button>
-						</div>
 
-						<div className="editor-sections">
-							<div className="left-column">
-								<BlueprintViewer blueprint={blueprint} />
-								
-								<ModuleDuplicator
-									blueprint={blueprint}
-									onUpdate={setBlueprint}
-								/>
-							</div>
-							
-							<div className="modification-tools">
-								<ModuleReorderer 
-									blueprint={blueprint} 
-									onUpdate={setBlueprint} 
-								/>
-								
-								<CoordinateModifier
-									blueprint={blueprint}
-									onUpdate={setBlueprint}
-								/>
-							</div>
-						</div>
-
-						<ExportControls 
-							blueprint={blueprint} 
-							blueprintName={blueprintName}
-							createNewId={createNewId}
-						/>
-					</div>
-				)}
+			<main className={styles.main}>
+				<Routes>
+					<Route path="/" element={<Navigate to="/builder" replace />} />
+					<Route path="/builder" element={<BlueprintBuilderPage />} />
+					<Route path="/settings" element={<SettingsPage />} />
+				</Routes>
 			</main>
+
+			<footer className={styles.footer}>
+				<p>
+					Made with ❤️ • © {new Date().getFullYear()} •{" "}
+					<a
+						href="https://github.com/DanielGRasmussen/x4-reindexer"
+						target="_blank"
+						rel="noopener noreferrer"
+					>
+						Github
+					</a>
+				</p>
+			</footer>
 		</div>
 	);
 }
