@@ -1,0 +1,106 @@
+@use "./styles/shared" as shared;
+@use "./styles/variables" as *;
+
+.app {
+	min-height: 100vh;
+	background-color: $bg-dark;
+	color: $text-light;
+	display: flex;
+	flex-direction: column;
+}
+
+.header {
+	background-color: $bg-medium;
+	padding: shared.$spacing-xl shared.$spacing-xl 0 shared.$spacing-xl;
+	text-align: center;
+	border-bottom: $border-width solid $primary-color;
+	position: relative;
+
+	h1 {
+		margin: 0;
+		color: $primary-color;
+		font-size: 2.5em;
+	}
+}
+
+.main {
+	padding: shared.$spacing-xl;
+	max-width: 1400px;
+	margin: 0 auto;
+	flex: 1;
+	width: 100%;
+}
+
+.footer {
+	background-color: $bg-medium;
+	border-top: $border-width solid $border-color;
+	padding: shared.$spacing-xl;
+	text-align: center;
+	margin-top: auto;
+
+	p {
+		margin: shared.$spacing-xs 0;
+		color: $text-light;
+		font-size: 14px;
+	}
+
+	a {
+		color: $primary-color;
+		text-decoration: none;
+		transition: opacity 0.2s;
+
+		&:hover {
+			opacity: 0.8;
+			text-decoration: underline;
+		}
+	}
+}
+
+// Tab Navigation
+.tabNavigation {
+	display: flex;
+	justify-content: center;
+	gap: shared.$spacing-md;
+	margin-top: shared.$spacing-xl;
+	padding-bottom: $border-width;
+}
+
+.tabButton {
+	background-color: $border-color;
+	color: $text-light;
+	border: $border-width solid transparent;
+	border-bottom: $border-width solid transparent;
+	padding: shared.$spacing-md shared.$spacing-xl shared.$spacing-md shared.$spacing-xl;
+	border-radius: $radius-xl $radius-xl 0 0;
+	cursor: pointer;
+	font-size: 16px;
+	font-weight: 500;
+	transition: all 0.3s;
+	position: relative;
+	margin-bottom: calc(-1 * $border-width);
+	text-decoration: none;
+	display: inline-block;
+
+	&:hover:not(.active) {
+		background-color: $bg-secondary;
+		color: $text-light;
+	}
+
+	&.active {
+		background-color: $bg-dark;
+		color: $primary-color;
+		border-color: $primary-color;
+		border-bottom-color: $bg-dark;
+		z-index: 20;
+
+		&::after {
+			content: "";
+			position: absolute;
+			bottom: -4px;
+			left: 0;
+			right: 0;
+			height: $border-width;
+			background-color: $bg-dark;
+		}
+	}
+}

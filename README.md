@@ -1,4 +1,4 @@
-# X4 Foundations Blueprint Editor
+# X4 Foundations Blueprint Builder
 
 [![Deploy to GitHub Pages](https://github.com/DanielGRasmussen/x4-reindexer/actions/workflows/deploy.yml/badge.svg)](https://github.com/DanielGRasmussen/x4-reindexer/actions)
 
@@ -7,12 +7,14 @@ A React-based web application for reordering and modifying X4 Foundations statio
 ## Features
 
 ### Blueprint Management
+
 - **Drag-and-drop file upload** for X4 blueprint XML files
 - **Rename blueprints** directly in the interface
 - **Create new blueprint IDs** to avoid overwriting originals
 - **Real-time module visualization** organized by type
 
 ### Module Priority Ordering
+
 - **Visual priority builder** with drag-and-drop reordering
 - **Partial module selection** - build specific quantities of each module type
 - **Segment support** - split module groups into multiple build phases
@@ -20,29 +22,32 @@ A React-based web application for reordering and modifying X4 Foundations statio
 - **Filter** by type
 
 ### Module Modifications
+
 - **Coordinate adjustment** - move modules by X/Y/Z offsets
 - **Module duplication** - create copies with configurable spacing
 - **Type-based operations** - apply changes to specific module categories or types
 
 ### Module Classification
+
 - Categorization (inspired by [this station calculator](http://www.x4-game.com/#/station-calculator)):
-	- Refined Goods
-	- High Tech Goods
-	- Ship Technology
-	- Recycling
-	- Agricultural Goods L1
-	- Agricultural Goods L2
-	- Pharmaceutical Goods
-	- Habitation
-	- Dock Area
-	- Pier
-	- Build Module
-	- Storage
-	- Defense
-	- Connection
-	- Other (Observation decks, radar, and welfare modules)
+  - Refined Goods
+  - High Tech Goods
+  - Ship Technology
+  - Recycling
+  - Agricultural Goods L1
+  - Agricultural Goods L2
+  - Pharmaceutical Goods
+  - Habitation
+  - Dock Area
+  - Pier
+  - Build Module
+  - Storage
+  - Defense
+  - Connection
+  - Other (Observation decks, radar, and welfare modules)
 
 ### Export Options
+
 - **Download** modified blueprint as XML
 - **Copy to clipboard** for quick sharing
 - **Preview** XML in browser
@@ -51,20 +56,23 @@ A React-based web application for reordering and modifying X4 Foundations statio
 ## Installation
 
 1. Clone the repository:
-	```bash
-	git clone https://github.com/yourusername/x4-blueprint-reindexer.git
-	cd x4-blueprint-reindexer
-	```
+
+   ```bash
+   git clone https://github.com/yourusername/x4-blueprint-reindexer.git
+   cd x4-blueprint-reindexer
+   ```
 
 2. Install dependencies:
-	```bash
-	npm install
-	```
+
+   ```bash
+   npm install
+   ```
 
 3. Start the development server:
-	```bash
-	npm start
-	```
+
+   ```bash
+   npm start
+   ```
 
 4. Open [http://localhost:3000](http://localhost:3000) in your browser
 
@@ -73,13 +81,13 @@ A React-based web application for reordering and modifying X4 Foundations statio
 1. **Upload Blueprint**: Drag and drop your X4 blueprint XML file onto the upload area
 2. **Edit Name**: Click the blueprint name to rename it
 3. **Set Build Order**:
-	- Click modules in the "Available Modules" list to add them to the build order
-	- Click priority items to show quantity sliders
-	- Drag priority numbers to reorder
-	- Use "Add All Remaining" for quick setup
+   - Click modules in the "Available Modules" list to add them to the build order
+   - Click priority items to show quantity sliders
+   - Drag priority numbers to reorder
+   - Use "Add All Remaining" for quick setup
 4. **Apply Modifications** (optional):
-	- Duplicate modules with custom spacing
-	- Adjust module coordinates
+   - Duplicate modules with custom spacing
+   - Adjust module coordinates
 5. **Export**: Download or copy your modified blueprint
 6. **Install**: Place the exported file in: `Documents\Egosoft\X4\[YourSteamID]\constructionplans\`
 

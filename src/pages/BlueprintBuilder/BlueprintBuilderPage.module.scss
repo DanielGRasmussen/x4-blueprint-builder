@@ -1,0 +1,320 @@
+@use "../../styles/shared" as shared;
+@use "../../styles/variables" as *;
+
+.blueprint-builder {
+	display: flex;
+	flex-direction: column;
+	height: 900px;
+	gap: shared.$spacing-xl;
+	overflow: hidden;
+}
+
+.builder-header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: shared.$spacing-lg;
+	background: $bg-medium;
+	border-radius: $radius-xl;
+	gap: shared.$spacing-xl;
+	border: 1px solid $border-color;
+}
+
+.blueprint-name-section {
+	display: flex;
+	flex-direction: column;
+	gap: shared.$spacing-xs;
+	flex: 1;
+	max-width: 400px;
+
+	.blueprint-name-input {
+		@include shared.form-input-base;
+		width: 100%;
+		padding: shared.$spacing-sm shared.$spacing-md;
+		font-size: 16px;
+		background-color: $bg-dark;
+		transition: border-color 0.2s;
+	}
+
+	.name-checkbox-label {
+		display: flex;
+		align-items: center;
+		gap: shared.$spacing-xs;
+		cursor: pointer;
+		color: shared.$text-muted;
+		font-size: 13px;
+		user-select: none;
+		transition: color 0.2s;
+		margin-left: 2px;
+
+		&:hover {
+			color: $text-light;
+		}
+
+		.name-checkbox {
+			width: 16px;
+			height: 16px;
+			cursor: pointer;
+			accent-color: $primary-color;
+			margin: 0;
+		}
+	}
+}
+
+.header-actions {
+	display: flex;
+	gap: shared.$spacing-md;
+	align-items: center;
+}
+
+.blueprint-action-button {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: shared.$spacing-sm;
+	padding: shared.$spacing-md shared.$spacing-lg;
+	border: none;
+	border-radius: $radius-lg;
+	background: $bg-secondary;
+	color: white;
+	font-family: inherit;
+	font-size: 14px;
+	font-weight: 500;
+	line-height: 1;
+	white-space: nowrap;
+	cursor: pointer;
+	transition: all 0.2s ease;
+	position: relative;
+
+	.button-icon {
+		width: 18px;
+		height: 18px;
+		flex-shrink: 0;
+		transition: transform 0.2s ease;
+	}
+
+	span {
+		position: relative;
+	}
+
+	&:hover:not(:disabled) {
+		transform: translateY(-2px);
+		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+
+		.button-icon {
+			transform: scale(1.1);
+		}
+	}
+
+	&:active:not(:disabled) {
+		transform: translateY(0);
+		box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+	}
+
+	&:disabled {
+		opacity: 0.4;
+		cursor: not-allowed;
+		transform: none;
+
+		&:hover {
+			box-shadow: none;
+		}
+	}
+
+	@mixin button-variant($base, $hover, $active, $disabled: null) {
+		background: $base;
+
+		&:hover:not(:disabled) {
+			background: $hover;
+		}
+
+		&:active:not(:disabled) {
+			background: $active;
+		}
+
+		@if $disabled {
+			&:disabled {
+				background: $disabled;
+			}
+		}
+	}
+
+	&.blueprint-import {
+		@include button-variant(#9b59b6, #8e44ad, #7d3c98);
+	}
+
+	&.blueprint-export {
+		@include button-variant(#27ae60, #229954, #1e8449, #1a5d38);
+	}
+
+	&.blueprint-copy {
+		@include button-variant(#3498db, #2980b9, #21618c, #1f5f8b);
+
+		&.success {
+			background: shared.$text-success;
+			animation: successFlash 0.5s ease-out;
+
+			&::after {
+				content: "";
+				position: absolute;
+				top: 50%;
+				left: 50%;
+				width: 0;
+				height: 0;
+				background: rgba(255, 255, 255, 0.3);
+				border-radius: 50%;
+				transform: translate(-50%, -50%);
+				animation: successRipple 0.6s ease-out;
+			}
+		}
+	}
+
+	&.blueprint-clear {
+		background: shared.$text-danger;
+
+		&:hover:not(:disabled) {
+			background: $danger-hover;
+		}
+
+		&:active:not(:disabled) {
+			background: #a00;
+		}
+	}
+}
+
+@keyframes successFlash {
+	0% {
+		transform: scale(1);
+	}
+	50% {
+		transform: scale(1.05);
+		box-shadow: 0 0 20px rgba(0, 204, 102, 0.5);
+	}
+	100% {
+		transform: scale(1);
+	}
+}
+
+@keyframes successRipple {
+	0% {
+		width: 0;
+		height: 0;
+		opacity: 1;
+	}
+	100% {
+		width: 100px;
+		height: 100px;
+		opacity: 0;
+	}
+}
+
+// Builder content layout
+.builder-content {
+	display: grid;
+	grid-template-columns: 300px 1fr 350px;
+	gap: shared.$spacing-xl;
+	flex: 1;
+	min-height: 0;
+	max-height: 100%;
+}
+
+.catalog-section,
+.blueprint-section,
+.editor-section {
+	@include shared.section-base;
+	min-height: 0;
+	max-height: 100%;
+	overflow: hidden;
+
+	h3 {
+		margin: 0 0 shared.$spacing-lg 0;
+		font-size: 18px;
+		color: $primary-color;
+	}
+}
+
+.editor-section {
+	overflow-y: auto;
+	overflow-x: hidden;
+
+	@include shared.custom-scrollbar;
+}
+
+.no-selection {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex: 1;
+	color: shared.$text-muted;
+	font-style: italic;
+}
+
+.module-list,
+.blueprint-list {
+	@include shared.custom-scrollbar;
+}
+
+@media (max-width: 1024px) {
+	.blueprint-builder {
+		height: auto;
+		min-height: 1000px;
+	}
+
+	.builder-header {
+		flex-direction: column;
+		gap: shared.$spacing-lg;
+	}
+
+	.blueprint-name-section {
+		max-width: 100%;
+	}
+
+	.header-actions {
+		width: 100%;
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		gap: shared.$spacing-sm;
+
+		.blueprint-action-button {
+			font-size: 14px;
+			padding: shared.$spacing-sm shared.$spacing-md;
+		}
+	}
+
+	.builder-content {
+		grid-template-columns: 1fr;
+		grid-template-rows: auto auto auto;
+		max-height: none;
+		gap: shared.$spacing-lg;
+	}
+
+	.catalog-section,
+	.blueprint-section {
+		max-height: 400px;
+		min-height: 300px;
+
+		h3 {
+			font-size: 16px;
+		}
+	}
+
+	.catalog-section {
+		order: 1;
+	}
+
+	.blueprint-section {
+		order: 2;
+		min-height: 350px;
+	}
+
+	.editor-section {
+		order: 3;
+		max-height: none;
+		min-height: auto;
+		overflow: visible;
+
+		h3 {
+			font-size: 16px;
+		}
+	}
+}

@@ -1,0 +1,93 @@
+@use "../../../styles/shared" as shared;
+@use "../../../styles/variables" as *;
+
+.settings-export {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: shared.$spacing-xl;
+
+	@media (max-width: 768px) {
+		grid-template-columns: 1fr;
+	}
+}
+
+%settings-section {
+	@include shared.section-base;
+	background: $bg-dark;
+
+	h3 {
+		margin: 0 0 shared.$spacing-md 0;
+		color: $primary-color;
+	}
+
+	p {
+		color: shared.$text-muted;
+		margin: 0 0 shared.$spacing-lg 0;
+		font-size: 14px;
+	}
+}
+
+.export-section {
+	@extend %settings-section;
+}
+
+.import-section {
+	@extend %settings-section;
+}
+
+.reset-section {
+	@extend %settings-section;
+}
+
+.settings-stats {
+	@extend %settings-section;
+
+	grid-column: 1 / -1;
+
+	ul {
+		list-style: none;
+		padding: 0;
+		margin: 0;
+	}
+
+	li {
+		padding: shared.$spacing-sm 0;
+		border-bottom: 1px solid #333;
+		color: $text-light;
+		display: flex;
+		justify-content: space-between;
+
+		&:last-child {
+			border-bottom: none;
+		}
+	}
+}
+
+%action-button {
+	@include shared.button-base;
+	font-size: 16px;
+	padding: shared.$spacing-md shared.$spacing-xl;
+}
+
+.export-button,
+.import-button {
+	@extend %action-button;
+	background: $primary-color;
+
+	&:hover:not(:disabled) {
+		background: $primary-hover;
+	}
+}
+
+.reset-button {
+	@extend %action-button;
+	background: shared.$text-danger;
+
+	&:hover:not(:disabled) {
+		background: $danger-hover;
+	}
+
+	&.danger {
+		background: shared.$text-danger;
+	}
+}

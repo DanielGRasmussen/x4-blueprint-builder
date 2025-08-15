@@ -1,0 +1,396 @@
+@use "../../../styles/shared" as shared;
+@use "../../../styles/variables" as *;
+
+.module-manager {
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+	max-height: 100%;
+}
+
+.manager-controls {
+	display: flex;
+	gap: shared.$spacing-md;
+	margin-bottom: shared.$spacing-lg;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.controls-left {
+	display: flex;
+	gap: shared.$spacing-md;
+	flex: 1;
+}
+
+%input-base {
+	padding: shared.$spacing-sm shared.$spacing-md;
+	background: $bg-dark;
+	color: $text-light;
+	border: 1px solid $border-color;
+	border-radius: $radius;
+
+	&:focus {
+		outline: none;
+		border-color: $primary-color;
+	}
+}
+
+.search-input {
+	@extend %input-base;
+	min-width: 250px;
+	max-width: 400px;
+}
+
+.type-filter {
+	@extend %input-base;
+	min-width: 200px;
+}
+
+.add-module-button {
+	@include shared.button-base;
+	background: $primary-color;
+	white-space: nowrap;
+	width: auto;
+	padding: shared.$spacing-sm shared.$spacing-xl;
+
+	&:hover:not(:disabled) {
+		background: $primary-hover;
+	}
+}
+
+.modules-list {
+	flex: 1;
+	overflow-y: auto;
+	padding: shared.$spacing-sm;
+	background: $bg-dark;
+	border: 1px solid $border-color;
+	border-radius: $radius;
+	max-height: calc(100vh - 250px);
+
+	@include shared.custom-scrollbar;
+}
+
+.modules-grid {
+	display: grid;
+	grid-template-columns: repeat(2, 1fr);
+	gap: shared.$spacing-md;
+
+	@media (max-width: 1200px) {
+		grid-template-columns: 1fr;
+	}
+}
+
+.module-item {
+	position: relative;
+	background: $bg-medium;
+	border: 1px solid #333;
+	border-radius: $radius-lg;
+	padding: shared.$spacing-md;
+	min-height: 80px;
+	transition: all 0.2s;
+	overflow: hidden;
+
+	&:hover {
+		background-color: rgba(255, 255, 255, 0.03);
+		border-color: $border-color;
+	}
+
+	&.editing {
+		background-color: $primary-overlay;
+		border-color: $primary-color;
+		padding: shared.$spacing-md;
+	}
+}
+
+.module-card {
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+	min-width: 0;
+	width: 100%;
+}
+
+.module-card-header {
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-start;
+	margin-bottom: shared.$spacing-xs;
+	gap: shared.$spacing-sm;
+}
+
+.module-name {
+	font-weight: 600;
+	color: $text-light;
+	font-size: 14px;
+	line-height: 1.2;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	flex: 1;
+	min-width: 0;
+}
+
+.module-actions {
+	display: flex;
+	gap: 2px;
+	flex-shrink: 0;
+	margin-left: auto;
+
+	button {
+		background: transparent;
+		border: none;
+		cursor: pointer;
+		padding: 3px;
+		border-radius: $radius-sm;
+		font-size: 13px;
+		transition: background-color 0.2s;
+		opacity: 0.7;
+
+		&:hover {
+			opacity: 1;
+		}
+	}
+}
+
+.edit-button:hover {
+	background-color: $primary-overlay-strong;
+}
+
+.delete-button:hover {
+	background-color: $danger-overlay-strong;
+}
+
+.module-macro {
+	font-family: monospace;
+	font-size: 11px;
+	color: #888;
+	margin-bottom: shared.$spacing-xs;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.module-card-footer {
+	display: flex;
+	justify-content: flex-end;
+	align-items: flex-end;
+	margin-top: auto;
+	padding-left: 0;
+}
+
+.module-type-info {
+	display: flex;
+	gap: shared.$spacing-xs;
+	align-items: center;
+	justify-content: flex-start;
+	width: 100%;
+}
+
+.module-type {
+	color: #aaa;
+	font-size: 11px;
+	background: rgba(255, 255, 255, 0.08);
+	padding: 2px 6px;
+	border-radius: $radius-sm;
+	white-space: nowrap;
+}
+
+.custom-badge {
+	background: $primary-color;
+	color: white;
+	padding: 2px 6px;
+	border-radius: $radius-sm;
+	font-size: 10px;
+	font-weight: 500;
+}
+
+.edit-form {
+	display: flex;
+	flex-direction: column;
+	gap: shared.$spacing-sm;
+}
+
+%edit-control {
+	padding: shared.$spacing-xs shared.$spacing-sm;
+	background: $bg-dark;
+	color: $text-light;
+	border: 1px solid $border-color;
+	border-radius: $radius-sm;
+	font-size: 13px;
+	width: 100%;
+}
+
+.edit-input {
+	@extend %edit-control;
+
+	&:disabled {
+		background: $bg-medium;
+		color: $bg-tertiary;
+		cursor: not-allowed;
+		border-color: #333;
+	}
+}
+
+.edit-select {
+	@extend %edit-control;
+}
+
+.edit-actions {
+	display: flex;
+	gap: shared.$spacing-xs;
+	justify-content: flex-end;
+	margin-top: shared.$spacing-xs;
+}
+
+%action-button {
+	padding: shared.$spacing-xs shared.$spacing-md;
+	color: white;
+	border: none;
+	border-radius: $radius;
+	cursor: pointer;
+	font-size: 12px;
+	font-weight: 500;
+	width: auto;
+	min-width: 60px;
+	white-space: nowrap;
+	transition: all 0.2s ease;
+
+	&:hover {
+		transform: translateY(-1px);
+	}
+
+	&:active {
+		transform: translateY(0);
+	}
+}
+
+.save-button {
+	@extend %action-button;
+	background: shared.$text-success;
+
+	&:hover {
+		background: $success-hover;
+	}
+}
+
+.cancel-button {
+	@extend %action-button;
+	background: $bg-tertiary;
+
+	&:hover {
+		background: #777;
+	}
+}
+
+.empty-state {
+	@include shared.empty-state;
+	grid-column: 1 / -1;
+	padding: calc(2 * shared.$spacing-xl);
+}
+
+.add-module-dialog {
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	background: $bg-medium;
+	border: 1px solid $border-color;
+	border-radius: $radius-xl;
+	padding: shared.$spacing-xl;
+	min-width: 400px;
+	z-index: 1000;
+	box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+
+	h3 {
+		margin: 0 0 shared.$spacing-xl 0;
+		color: $primary-color;
+	}
+}
+
+.form-group {
+	label {
+		display: block;
+		margin-bottom: shared.$spacing-xs;
+		color: shared.$text-muted;
+	}
+
+	input,
+	select {
+		width: 100%;
+		padding: shared.$spacing-sm shared.$spacing-md;
+		background: $bg-dark;
+		color: $text-light;
+		border: 1px solid $border-color;
+		border-radius: $radius;
+
+		&:focus {
+			outline: none;
+			border-color: $primary-color;
+		}
+	}
+}
+
+.error-message {
+	color: shared.$text-danger;
+	margin-bottom: shared.$spacing-lg;
+	padding: shared.$spacing-sm shared.$spacing-md;
+	background: $danger-overlay;
+	border: 1px solid shared.$text-danger;
+	border-radius: $radius;
+}
+
+.form-row-group {
+	display: flex;
+	align-items: flex-end;
+	gap: shared.$spacing-lg;
+	margin-top: shared.$spacing-md;
+}
+
+.category-select {
+	width: 200px;
+	padding: shared.$spacing-sm shared.$spacing-md;
+	background: $bg-dark;
+	color: $text-light;
+	border: 1px solid $border-color;
+	border-radius: $radius;
+
+	&:focus {
+		outline: none;
+		border-color: $primary-color;
+	}
+}
+
+.dialog-actions {
+	display: flex;
+	gap: shared.$spacing-sm;
+	margin: 0;
+}
+
+.add-button {
+	padding: shared.$spacing-sm shared.$spacing-lg;
+	border: none;
+	border-radius: $radius;
+	cursor: pointer;
+	font-size: 14px;
+	font-weight: 500;
+	transition: all 0.2s ease;
+	background: $primary-color;
+	color: white;
+	width: auto;
+	min-width: 100px;
+	white-space: nowrap;
+
+	&:hover:not(:disabled) {
+		background: $primary-hover;
+		transform: translateY(-1px);
+	}
+
+	&:active:not(:disabled) {
+		transform: translateY(0);
+	}
+
+	&:disabled {
+		opacity: 0.5;
+		cursor: not-allowed;
+	}
+}

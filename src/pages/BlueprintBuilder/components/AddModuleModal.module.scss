@@ -1,0 +1,146 @@
+@use "../../../styles/shared" as shared;
+@use "../../../styles/variables" as *;
+
+@keyframes fadeIn {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
+}
+
+@keyframes slideIn {
+	from {
+		transform: translateY(-20px);
+		opacity: 0;
+	}
+	to {
+		transform: translateY(0);
+		opacity: 1;
+	}
+}
+
+.modal-overlay {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: rgba(0, 0, 0, 0.7);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	z-index: 1000;
+	animation: fadeIn 0.2s ease-out;
+}
+
+.modal-content {
+	background: $bg-medium;
+	border: 1px solid $border-color;
+	border-radius: $radius-xl;
+	padding: shared.$spacing-xl;
+	max-width: 500px;
+	width: 90%;
+	max-height: 80vh;
+	overflow-y: auto;
+	box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+	animation: slideIn 0.2s ease-out;
+
+	@include shared.custom-scrollbar;
+
+	h2 {
+		margin: 0 0 shared.$spacing-sm 0;
+		color: $primary-color;
+		font-size: 20px;
+	}
+}
+
+.modal-description {
+	color: shared.$text-muted;
+	margin: 0 0 shared.$spacing-md 0;
+	font-size: 14px;
+}
+
+.form-group label {
+	display: block;
+	margin-top: shared.$spacing-sm;
+	color: $text-light;
+	font-weight: 500;
+	font-size: 14px;
+}
+
+.form-input,
+.form-select {
+	width: 100%;
+	padding: shared.$spacing-md shared.$spacing-md;
+	background: $bg-dark;
+	border: 1px solid $border-color;
+	border-radius: $radius;
+	color: $text-light;
+	font-size: 14px;
+	transition: border-color 0.2s;
+
+	&:focus {
+		outline: none;
+		border-color: $primary-color;
+	}
+
+	&.disabled {
+		opacity: 0.7;
+		cursor: not-allowed;
+		background: $hover-overlay;
+	}
+
+	&.error {
+		border-color: shared.$text-danger;
+	}
+}
+
+.error-message {
+	display: block;
+	margin-top: shared.$spacing-xs;
+	color: shared.$text-danger;
+	font-size: 12px;
+}
+
+.modal-actions {
+	display: flex;
+	gap: shared.$spacing-md;
+	justify-content: flex-end;
+	margin-top: shared.$spacing-xl;
+}
+
+.button-primary,
+.button-secondary {
+	@include shared.button-base;
+	font-weight: 500;
+	padding: shared.$spacing-md shared.$spacing-xl;
+	font-size: 14px;
+}
+
+.button-primary {
+	background: $primary-color;
+	color: white;
+
+	&:hover:not(:disabled) {
+		background: #0099e6;
+	}
+}
+
+.button-secondary {
+	background: transparent;
+	color: $text-light;
+	border: 1px solid $border-color;
+
+	&:hover:not(:disabled) {
+		background: $hover-overlay;
+		border-color: $bg-tertiary;
+		transform: translateY(-1px);
+	}
+
+	&:active:not(:disabled) {
+		background: rgba(255, 255, 255, 0.1);
+		transform: translateY(0);
+	}
+}

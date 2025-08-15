@@ -1,0 +1,22 @@
+{
+	"extends": ["stylelint-config-standard-scss"],
+	"rules": {
+		"color-hex-length": "short",
+		"color-named": null,
+		"selector-class-pattern": null,
+		"media-feature-range-notation": null,
+		"declaration-empty-line-before": null,
+		"no-descending-specificity": null,
+		"color-function-notation": null,
+		"alpha-value-notation": null,
+		"color-function-alias-notation": null,
+		"font-family-name-quotes": null,
+		"property-no-vendor-prefix": null,
+		"scss/dollar-variable-empty-line-before": null,
+		"shorthand-property-no-redundant-values": null,
+		"keyframes-name-pattern": null,
+		"rule-empty-line-before": null,
+		"declaration-block-no-redundant-longhand-properties": null
+	},
+	"ignoreFiles": ["node_modules/**", "build/**", "dist/**"]
+}

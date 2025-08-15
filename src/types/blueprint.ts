@@ -31,6 +31,7 @@ export interface Predecessor {
 export interface ShieldUpgrade {
 	macro: string;
 	group: string;
+	exact?: number;
 }
 
 export interface TurretUpgrade {
