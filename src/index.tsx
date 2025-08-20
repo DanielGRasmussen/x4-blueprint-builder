@@ -7,7 +7,7 @@ import App from "./App";
 const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement);
 root.render(
 	<React.StrictMode>
-		<BrowserRouter>
+		<BrowserRouter basename="/x4-blueprint-builder">
 			<App />
 		</BrowserRouter>
 	</React.StrictMode>
