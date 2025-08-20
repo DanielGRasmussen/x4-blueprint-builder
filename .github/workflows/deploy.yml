@@ -33,11 +33,6 @@ jobs:
    - name: Build
      run: npm run build
 
-   - name: Copy public assets
-     run: |
-      cp public/icon.svg build/
-      cp public/manifest.json build/
-
    - name: Setup Pages
      uses: actions/configure-pages@v4
 
